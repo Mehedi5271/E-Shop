@@ -12,7 +12,7 @@ class HomeController extends Controller
     }
 
     function users(){
-        $alluser = User::all();
-        return view('user',['users'=> $alluser]);
+        $users = User::all();
+        return view('user',compact('users'));
     }
 }
