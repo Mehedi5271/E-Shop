@@ -51,6 +51,8 @@ Product List
                         <td>{{$product->price}}</td>
                         <td>{{$product->description}}</td>
                         <td>{{$product->is_active}}</td>
+                        <td>{{$product->is_active}}</td>
+
                     </tr>
                     @endforeach
                 </tbody>
