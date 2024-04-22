@@ -6,7 +6,7 @@ Product List
 
 @section('content')
 <div class="container-fluid px-4">
-    <h1 class="mt-4">Product List</h1>
+    <h1 class="mt-4"> E Shop</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
         <li class="breadcrumb-item active">Product List</li>
@@ -20,6 +20,12 @@ Product List
             Product List <a class="btn btn-sm btn-outline-primary" href="{{route('products.create')}}">Add New</a>
         </div>
         <div class="card-body">
+            @if (session('status'))
+
+            <div class="alert alert-success">{{ session('status') }}</div>
+
+            @endif
+
             <table id="datatablesSimple">
                 <thead>
                     <tr>
@@ -28,6 +34,7 @@ Product List
                         <th>Price</th>
                         <th>Description</th>
                         <th>Is Active</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tfoot>
@@ -51,7 +58,9 @@ Product List
                         <td>{{$product->price}}</td>
                         <td>{{$product->description}}</td>
                         <td>{{$product->is_active}}</td>
-                        <td>{{$product->is_active}}</td>
+                        <td>
+                            <a href="{{route('products.edit',['id'=> $product->id])}}">Edit</a>
+                        </td>
 
                     </tr>
                     @endforeach

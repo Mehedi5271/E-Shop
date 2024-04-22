@@ -38,25 +38,24 @@ Create
         <form action="{{route('products.store')}}" method="POST">
             @csrf
             <div class="form-floating mb-3 ">
-                <input class="form-control" name="title" id="title" type="text" value="{{ old('title') }}" placeholder="Enter Title" />
+                <input class="form-control" name="title" id="title" type="text" value="{{ old('title', $products->title) }}" placeholder="Enter Title" />
                 <label for="inputFirstName"> Title</label>
             </div>
             @error('title')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
             <div class="form-floating mb-3">
-                <input class="form-control" name="price" id="price" type="number" value="{{ old('price') }}" placeholder="Enter Price" />
+                <input class="form-control" name="price" id="price" type="number" value="{{ old('price',$products->price) }}" placeholder="Enter Price" />
                 <label for="inputEmail">Price</label>
             </div>
             @error('price')
             <div class="alert alert-danger">{{ $message }}</div>
             @enderror
+            <div class="form-floating mb-3">
+                <textarea class="form-control" name="description" id="description" placeholder="Enter Description"> {{ old('description', $products->description) }} </textarea>
+                <label for="description">Description</label>
+            </div>
 
-                    <div class="form-floating mb-3 ">
-                        <textarea class="form-control" name="description" id="description" value="{{ old('description') }}"  placeholder="Enter Description" ></textarea>
-
-                        <label for="description">Description</label>
-                    </div>
                     @error('description')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
