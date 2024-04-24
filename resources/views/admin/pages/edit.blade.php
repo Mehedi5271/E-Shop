@@ -35,8 +35,9 @@ Create
         </ul>
     </div>
 @endif
-        <form action="{{route('products.store')}}" method="POST">
+        <form action="{{route('products.update' , ['id'=> $products->id])}}" method="POST">
             @csrf
+            @method('patch')
             <div class="form-floating mb-3 ">
                 <input class="form-control" name="title" id="title" type="text" value="{{ old('title', $products->title) }}" placeholder="Enter Title" />
                 <label for="inputFirstName"> Title</label>

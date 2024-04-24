@@ -59,8 +59,15 @@ Product List
                         <td>{{$product->description}}</td>
                         <td>{{$product->is_active}}</td>
                         <td>
-                            <a href="{{route('products.edit',['id'=> $product->id])}}">Edit</a>
+                            <a class="btn btn-sm btn-success" href="{{route('products.show',['id'=> $product->id])}}">Show</a>
                         </td>
+                        <td>
+                            <a class="btn btn-sm btn-warning" href="{{route('products.edit',['id'=> $product->id])}}">Edit</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-sm btn-danger" href="{{route('products.delete',['id'=> $product->id])}}">Delete</a>
+                        </td>
+
 
                     </tr>
                     @endforeach
