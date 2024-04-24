@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
-    function products(){
+    function index(){
        $products = Product::latest()->paginate();
         return view('admin.pages.products',compact('products'));
     }
@@ -59,9 +59,9 @@ class ProductController extends Controller
         return redirect()->route('products.index')->withStatus('Data Update Sucessfully');
     }
 
-    public function delete($id){
-        $product = Product::findOrFail($id);
-        dd($id);
+    public function destroy($id){
+        Product::destroy($id);
+        return redirect()->route('products.index')->withStatus('Data Deleted Sucessfully');
 
 
     }

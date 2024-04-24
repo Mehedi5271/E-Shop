@@ -64,10 +64,15 @@ Product List
                         <td>
                             <a class="btn btn-sm btn-warning" href="{{route('products.edit',['id'=> $product->id])}}">Edit</a>
                         </td>
-                        <td>
-                            <a class="btn btn-sm btn-danger" href="{{route('products.delete',['id'=> $product->id])}}">Delete</a>
-                        </td>
+                       <td>
 
+                        <form action="{{route('products.destroy',['id'=> $product->id])}}" method="POST">
+                            @csrf
+                            @method('delete')
+                            <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+
+                        </form>
+                    </td>
 
                     </tr>
                     @endforeach
