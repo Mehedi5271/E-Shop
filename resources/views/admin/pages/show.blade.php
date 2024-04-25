@@ -13,7 +13,7 @@ Product List
     </ol>
     <div class="card lg-12">
         <div class="card" style="width: 18rem;">
-            <img src="..." class="card-img-top" alt="...">
+            <img src="{{ asset('./storage/images/' . $products->image) }}" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title">{{$products->title}}</h5>
               <p class="card-text" >Description: {{$products->description}}</p>

@@ -35,7 +35,7 @@ Create
         </ul>
     </div>
 @endif
-        <form action="{{route('products.update' , ['id'=> $products->id])}}" method="POST">
+        <form action="{{route('products.update' , ['id'=> $products->id])}}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('patch')
             <div class="form-floating mb-3 ">
@@ -67,6 +67,16 @@ Create
                           Is Active
                         </label>
                       </div>
+
+                      <img style="height: 100px;  width: 100px; " src="{{ asset('./storage/images/' . $products->image) }}" class="card-img-top" alt="...">
+
+                      <div class="form-floating mb-3">
+                        <input type="file" value="{{ old('image',$products->image) }}" class="form-control" accept="image/*" name="image" id="image" accept="image/*">
+                        <label for="image">Upload Image</label>
+                    </div>
+                    @error('image')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
 
             <div class="mt-4 mb-0">
                 <div class="d-grid"><button type="submit" class="btn btn-primary btn-block" >Submit</button></div>

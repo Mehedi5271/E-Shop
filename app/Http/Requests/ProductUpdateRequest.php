@@ -24,7 +24,9 @@ class ProductUpdateRequest extends FormRequest
         return [
             'title' => 'required||min:5|',
             'price' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'image' => 'image|mimes:png,jpg,jpeg,webp|max:2048'
+
         ];
     }
 
@@ -32,7 +34,8 @@ class ProductUpdateRequest extends FormRequest
     {
         return[
             'title.required' => 'The title field is required.',
-            'title.min' => 'minimum 5 character dite hobe'
+            'title.min' => 'minimum 5 character dite hobe',
+
         ];
     }
 }

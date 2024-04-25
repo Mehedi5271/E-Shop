@@ -35,7 +35,7 @@ Create
         </ul>
     </div>
 @endif
-        <form action="{{route('products.store')}}" method="POST">
+        <form action="{{route('products.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-floating mb-3 ">
                 <input class="form-control" name="title" id="title" type="text" value="{{ old('title') }}" placeholder="Enter Title" />
@@ -66,7 +66,15 @@ Create
                         <label class="form-check-label" for="isActive">
                           Is Active
                         </label>
-                      </div>
+                      </div> <br>
+
+                      <div class="form-floating mb-3">
+                        <input type="file" class="form-control" accept="image/*" name="image" id="image" accept="image/*">
+                        <label for="image">Upload Image</label>
+                    </div>
+                    @error('image')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
 
             <div class="mt-4 mb-0">
                 <div class="d-grid"><button type="submit" class="btn btn-primary btn-block" >Submit</button></div>

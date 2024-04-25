@@ -13,9 +13,9 @@ Product List
     <div class="card mb-4">
         <div class="card-header">
             <i class="fas fa-table me-1"></i>
-            Product List
-            <a class="btn btn-sm btn-outline-primary" href="{{ route('products.create') }}">Add New</a>
-            <a class="btn btn-sm btn-outline-warning" href="{{ route('products.trash') }}">Trash</a>
+            Trash List
+            {{-- <a class="btn btn-sm btn-outline-primary" href="{{ route('products.create') }}">Add New</a>
+            <a class="btn btn-sm btn-outline-primary" href="{{ route('products.trash') }}">Trash</a> --}}
         </div>
         <div class="card-body">
             @if (session('status'))
@@ -48,7 +48,11 @@ Product List
                             <td>{{ $product->description }}</td>
                             <td>{{ $product->is_active }}</td>
                             <td>
-                                <a class="btn btn-sm btn-success" href="{{ route('products.show', ['id'=> $product->id]) }}">Show</a>
+                                <form action="{{ route('products.restore', [$product->id]) }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    @method('patch')
+                                    <button class="btn btn-sm btn-danger" type="submit">Restore</button>
+                                </form>
                             </td>
                             <td>
                                 <a class="btn btn-sm btn-warning" href="{{ route('products.edit', ['id'=> $product->id]) }}">Edit</a>
