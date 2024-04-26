@@ -39,7 +39,16 @@ Product List
                         </tr>
                     </thead>
                     <tfoot>
-
+                          <tr>
+                            <th>Serial</th>
+                            <th>Title</th>
+                            <th>Price</th>
+                            <th>Description</th>
+                            <th>Is Active</th>
+                            <th>Action</th>
+                            <th>Action</th>
+                            <th>Action</th>
+                        </tr>
                     </tfoot>
                     <tbody>
                         @foreach ($products as $product)
