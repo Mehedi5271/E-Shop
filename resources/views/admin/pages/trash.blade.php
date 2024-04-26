@@ -33,7 +33,6 @@ Product List
                             <th>Is Active</th>
                             <th>Action</th>
                             <th>Action</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -51,14 +50,12 @@ Product List
                                 <form action="{{ route('products.restore', [$product->id]) }}" method="POST" style="display: inline;">
                                     @csrf
                                     @method('patch')
-                                    <button class="btn btn-sm btn-danger" type="submit">Restore</button>
+                                    <button class="btn btn-sm btn-success" type="submit">Restore</button>
                                 </form>
                             </td>
+
                             <td>
-                                <a class="btn btn-sm btn-warning" href="{{ route('products.edit', ['id'=> $product->id]) }}">Edit</a>
-                            </td>
-                            <td>
-                                <form action="{{ route('products.destroy', ['id'=> $product->id]) }}" method="POST" style="display: inline;">
+                                <form action="{{ route('products.delete', ['id'=> $product->id]) }}" method="POST" style="display: inline;">
                                     @csrf
                                     @method('delete')
                                     <button class="btn btn-sm btn-danger" type="submit">Delete</button>

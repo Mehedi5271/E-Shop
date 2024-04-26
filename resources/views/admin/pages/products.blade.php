@@ -16,6 +16,8 @@ Product List
             Product List
             <a class="btn btn-sm btn-outline-primary" href="{{ route('products.create') }}">Add New</a>
             <a class="btn btn-sm btn-outline-warning" href="{{ route('products.trash') }}">Trash</a>
+            <a class="btn btn-sm btn-outline-success" href="{{ route('products.downloadPdf') }}">PDF</a>
+            <a class="btn btn-sm btn-outline-success" href="{{ route('products.downloadExcel') }}">Excel</a>
         </div>
         <div class="card-body">
             @if (session('status'))
