@@ -96,6 +96,8 @@ class ProductController extends Controller
 
     // Trash Data
     public function trash(){
+
+
     $products = Product::latest()->onlyTrashed()->paginate();
 
     return view('admin.pages.trash', compact('products'));

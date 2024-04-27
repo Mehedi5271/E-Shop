@@ -15,7 +15,11 @@ Product List
             <i class="fas fa-table me-1"></i>
             Product List
             <a class="btn btn-sm btn-outline-primary" href="{{ route('products.create') }}">Add New</a>
+
+            @can('trash-list')
             <a class="btn btn-sm btn-outline-warning" href="{{ route('products.trash') }}">Trash</a>
+            @endcan
+            
             <a class="btn btn-sm btn-outline-success" href="{{ route('products.downloadPdf') }}">PDF</a>
             <a class="btn btn-sm btn-outline-success" href="{{ route('products.downloadExcel') }}">Excel</a>
         </div>
@@ -65,11 +69,14 @@ Product List
                                 <a class="btn btn-sm btn-warning" href="{{ route('products.edit', ['id'=> $product->id]) }}">Edit</a>
                             </td>
                             <td>
+                                @can('delete-product')
+
                                 <form action="{{ route('products.destroy', ['id'=> $product->id]) }}" method="POST" style="display: inline;">
                                     @csrf
                                     @method('delete')
                                     <button class="btn btn-sm btn-danger" type="submit">Delete</button>
                                 </form>
+                                @endcan
                             </td>
 
                         </tr>

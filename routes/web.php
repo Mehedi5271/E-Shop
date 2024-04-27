@@ -2,6 +2,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -30,7 +31,6 @@ Route::delete('/products/{id}/delete', [ProductController::class, 'delete'])->na
 Route::get('/products/downloadPdf',[ProductController::class,'downloadPdf'])->name('products.downloadPdf');
 Route::get('/products/downloadExcel',[ProductController::class,'downloadExcel'])->name('products.downloadExcel');
 
-
 Route::get('/products',[ProductController::class,'index'])->name('products.index');
 Route::get('/products/create',[ProductController::class,'create'])->name('products.create');
 Route::post('/products',[ProductController::class,'store'])->name('products.store');
@@ -39,4 +39,5 @@ Route::get('/products/{id}/edit',[ProductController::class,'edit'])->name('produ
 Route::patch('/products/{id}',[ProductController::class,'update'])->name('products.update');
 Route::delete('/products/{id}',[ProductController::class,'destroy'])->name('products.destroy');
 
+Route::get('/users',[UserController::class,'index'])->name('users.index');
 });
