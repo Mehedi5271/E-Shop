@@ -16,10 +16,15 @@ class HomeController extends Controller
         return view('welcome',compact('products','categories'));
     }
 
-    public function index(){
+    public function CategoryWiseProducts($categoryId)
+    {
+        $products = Product::latest()->paginate(12);
+        $categories = Category::pluck('title','id')->toArray();
 
-        return view('welcome');
+        return view('welcome',compact('products','categories'));
     }
+
+
 
 
     function home(){

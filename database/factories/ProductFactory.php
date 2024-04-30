@@ -16,11 +16,13 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
+        $categories = [1,2,3];
         return [
             'title'=> fake()->realText(10),
             'price' => rand(1000,100000),
             'description' => fake()->paragraph(),
-            'is_active' => true
+            'is_active' => true,
+            'category_id' => $categories[array_rand($categories,1)]
         ];
     }
 }
