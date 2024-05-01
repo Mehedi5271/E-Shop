@@ -19,7 +19,7 @@ Product List
             @can('trash-list')
             <a class="btn btn-sm btn-outline-warning" href="{{ route('products.trash') }}">Trash</a>
             @endcan
-            
+
             <a class="btn btn-sm btn-outline-success" href="{{ route('products.downloadPdf') }}">PDF</a>
             <a class="btn btn-sm btn-outline-success" href="{{ route('products.downloadExcel') }}">Excel</a>
         </div>
@@ -35,6 +35,7 @@ Product List
                             <th>Serial</th>
                             <th>Title</th>
                             <th>Price</th>
+                            <th>Category</th>
                             <th>Description</th>
                             <th>Is Active</th>
                             <th>Action</th>
@@ -47,6 +48,7 @@ Product List
                             <th>Serial</th>
                             <th>Title</th>
                             <th>Price</th>
+                            <th>Category</th>
                             <th>Description</th>
                             <th>Is Active</th>
                             <th>Action</th>
@@ -60,6 +62,7 @@ Product List
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $product->title }}</td>
                             <td>{{ $product->price }}</td>
+                            <td>{{ $product->category->title }}</td>
                             <td>{{ $product->description }}</td>
                             <td>{{ $product->is_active }}</td>
                             <td>

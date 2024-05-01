@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Str;
+
 
 
 
@@ -45,6 +47,7 @@ class ProductController extends Controller
 
         Product::create([
             'title' => $request->title,
+            'slug' => Str::slug($request->title),
             'price' => $request->price,
             'description' => $request->description,
             'is_active' => $request->is_active ?? 0,
@@ -59,13 +62,13 @@ class ProductController extends Controller
 
     // Edit Data
     public function edit($id){
-       $products = Product::findOrFail($id);
-       return view('admin.pages.edit',compact('products'));
+        $products = Product::findOrFail($id);
+        return view('admin.pages.edit',compact('products'));
 
     }
 
     // Update Data
-   public function update(ProductUpdateRequest $request, $id){
+    public function update(ProductUpdateRequest $request, $id){
         $products = Product::findOrFail($id);
 
         if($request->hasFile('image')){
@@ -77,6 +80,7 @@ class ProductController extends Controller
 
         $products->update([
             'title' => $request->title,
+            'slug' => Str::slug($request->title),
             'price' => $request->price,
            'description' => $request->description,
             'is_active' => $request->is_active ?? 0,

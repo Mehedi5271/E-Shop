@@ -6,22 +6,24 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Symfony\Component\CssSelector\XPath\Extension\FunctionExtension;
 
 class HomeController extends Controller
 {
     public function welcome(){
         $products = Product::latest()->paginate(12);
-        $categories = Category::pluck('title','id')->toArray();
+        $categories = Category::pluck('title','slug')->toArray();
 
         return view('welcome',compact('products','categories'));
     }
 
-    public function CategoryWiseProducts($categoryId)
+    public function CategoryWiseProducts($slug)
     {
-        $products = Product::latest()->paginate(12);
-        $categories = Category::pluck('title','id')->toArray();
+        $category = Category::where('slug',$slug)->firstOrFail();
+        $products = $category->products()->paginate(10);
+        $categories = Category::pluck('title','slug')->toArray();
 
-        return view('welcome',compact('products','categories'));
+        return view('category_wise_product',compact('products','categories'));
     }
 
 
@@ -35,4 +37,12 @@ class HomeController extends Controller
         $users = User::all();
         return view('user',compact('users'));
     }
+
+    // public function productDetails($slug){
+    //    $product= Product::where('slug', $slug)->firstOrFail();
+    //    dd($product);
+    //    $categories = Category::pluck('title','slug')->toArray();
+    //    return view('product_details',compact('product','categories'));
+
+    // }
 }

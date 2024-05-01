@@ -8,23 +8,25 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class,'welcome'])->name('welcome');
-Route::get('/{id}',[HomeController::class,'CategoryWiseProducts'])->name('category.products');
 
 // Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
-require __DIR__.'/auth.php';
+    //     return view('dashboard');
+    // })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-Route::middleware('auth')->prefix('admin')->group(function(){
-Route::get('/dashboard',[DashboardController::class,'dashboard'])->name('dashboard');
+
+    require __DIR__.'/auth.php';
+
+    Route::get('/{slug}',[HomeController::class,'CategoryWiseProducts'])->name('category.products');
+    Route::get('/products/{slug}',[HomeController::class,'productDetails'])->name('product.details');
+
+    Route::middleware('auth')->prefix('admin')->group(function(){
+        Route::get('/dashboard',[DashboardController::class,'dashboard'])->name('dashboard');
+
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
 
 Route::get('/products/trash',[ProductController::class,'trash'])->name('products.trash');
 Route::patch('/products/{id}/restore', [ProductController::class, 'restore'])->name('products.restore');
