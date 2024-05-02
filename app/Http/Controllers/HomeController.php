@@ -26,6 +26,14 @@ class HomeController extends Controller
         return view('category_wise_product',compact('products','categories'));
     }
 
+     public function productDetails($slug){
+       $product= Product::where('slug', $slug)->firstOrFail();
+    //    dd($product);
+       $categories = Category::pluck('title','slug')->toArray();
+       return view('product_details',compact('product','categories'));
+
+    }
+
 
 
 
@@ -38,11 +46,4 @@ class HomeController extends Controller
         return view('user',compact('users'));
     }
 
-    // public function productDetails($slug){
-    //    $product= Product::where('slug', $slug)->firstOrFail();
-    //    dd($product);
-    //    $categories = Category::pluck('title','slug')->toArray();
-    //    return view('product_details',compact('product','categories'));
-
-    // }
 }

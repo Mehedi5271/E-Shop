@@ -47,7 +47,7 @@ class ProductController extends Controller
 
         Product::create([
             'title' => $request->title,
-            'slug' => Str::slug($request->title),
+            // 'slug' => Str::slug($request->title),
             'price' => $request->price,
             'description' => $request->description,
             'is_active' => $request->is_active ?? 0,
@@ -80,7 +80,7 @@ class ProductController extends Controller
 
         $products->update([
             'title' => $request->title,
-            'slug' => Str::slug($request->title),
+            // 'slug' => Str::slug($request->title),
             'price' => $request->price,
            'description' => $request->description,
             'is_active' => $request->is_active ?? 0,

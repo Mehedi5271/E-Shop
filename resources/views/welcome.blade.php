@@ -19,7 +19,7 @@
                     <h5 class="card-text">Price: {{$product->price}}</h5>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                            <a  type="button" class="btn btn-sm btn-outline-secondary" href="{{route('product.details',$product->slug)}}">View</a>
                             <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
                         </div>
                         <small class="text-muted">9 mins</small>
