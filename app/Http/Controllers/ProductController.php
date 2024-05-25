@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Exports\ProductsExport;
 use App\Http\Requests\ProductRequest;
 use App\Http\Requests\ProductUpdateRequest;
+use App\Models\Category;
+use App\Models\Color;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -33,11 +35,15 @@ class ProductController extends Controller
 
     // Insert Data
     public function create(){
-        return view('admin.pages.create');
+        $categories = Category::pluck('title','id')->toArray();
+        $colors = Color::pluck('name','id')->toArray();
+        return view('admin.pages.create',compact('categories','colors'));
     }
 
 
    public function store(ProductRequest $request){
+
+    dd($request->all());
 
         $imageName = time().'.'.$request->image->extension();
         $request->image->storeAs('public/images', $imageName);         // Store in Storage Folder
@@ -46,8 +52,9 @@ class ProductController extends Controller
         // $request->image->move(public_path('images'), $imageName);
 
         Product::create([
+            'category_id' => $request->category_id,
             'title' => $request->title,
-            // 'slug' => Str::slug($request->title),
+            'slug' => Str::slug($request->title),
             'price' => $request->price,
             'description' => $request->description,
             'is_active' => $request->is_active ?? 0,
@@ -63,7 +70,9 @@ class ProductController extends Controller
     // Edit Data
     public function edit($id){
         $products = Product::findOrFail($id);
-        return view('admin.pages.edit',compact('products'));
+        $categories = Category::pluck('title','id')->toArray();
+
+        return view('admin.pages.edit',compact('products','categories'));
 
     }
 
@@ -79,8 +88,10 @@ class ProductController extends Controller
 
 
         $products->update([
+            'category_id' => $request->category_id,
+
             'title' => $request->title,
-            // 'slug' => Str::slug($request->title),
+            'slug' => Str::slug($request->title),
             'price' => $request->price,
            'description' => $request->description,
             'is_active' => $request->is_active ?? 0,
@@ -136,6 +147,9 @@ class ProductController extends Controller
     {
         return Excel::download(new ProductsExport, 'product-list.xlsx');
     }
+
+
+
 
 
 

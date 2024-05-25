@@ -38,6 +38,20 @@ Create
         <form action="{{route('products.update' , ['id'=> $products->id])}}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('patch')
+
+            <div class="form-floating mb-3 ">
+                <select name="category_id" class="form-control" >
+                    <option value="">Selete Category</option>
+                    @foreach ($categories as $categoryId => $categorytitle)
+
+                    <option value="{{$categoryId}}">{{$categorytitle}} </option>
+                    @endforeach
+                </select>
+                <label for="category_id"> Category</label>
+            </div>
+            @error('category_id')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             <div class="form-floating mb-3 ">
                 <input class="form-control" name="title" id="title" type="text" value="{{ old('title', $products->title) }}" placeholder="Enter Title" />
                 <label for="inputFirstName"> Title</label>

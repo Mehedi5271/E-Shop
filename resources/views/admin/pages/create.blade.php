@@ -37,6 +37,21 @@ Create
 @endif
         <form action="{{route('products.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
+
+            <div class="form-floating mb-3 ">
+                <select name="category_id" class="form-control" >
+                    <option value="">Selete Category</option>
+                    @foreach ($categories as $categoryId => $categorytitle)
+
+                    <option value="{{$categoryId}}">{{$categorytitle}} </option>
+                    @endforeach
+                </select>
+                <label for="category_id"> Category</label>
+            </div>
+            @error('category_id')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+
             <div class="form-floating mb-3 ">
                 <input class="form-control" name="title" id="title" type="text" value="{{ old('title') }}" placeholder="Enter Title" />
                 <label for="inputFirstName"> Title</label>
@@ -75,6 +90,16 @@ Create
                     @error('image')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
+
+                    <label for="color">Color</label>
+                    @foreach ($colors as $colorId=>$colorName)
+
+                    <div class="form-check">
+                        <input class="form-check-input" name="color_id[]" value="{{$colorId}}" type="checkbox"  id="{{$colorId}}" >
+                        <label class="form-check-label" for="{{$colorId}}"> {{$colorName}} </label>
+                    </div>
+                    @endforeach
+                    <br> <br>
 
             <div class="mt-4 mb-0">
                 <div class="d-grid"><button type="submit" class="btn btn-primary btn-block" >Submit</button></div>

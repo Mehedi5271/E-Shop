@@ -62,7 +62,7 @@ Product List
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $product->title }}</td>
                             <td>{{ $product->price }}</td>
-                            <td>{{ $product->category->title }}</td>
+                            <td>{{ optional($product->category)->title }}</td>
                             <td>{{ $product->description }}</td>
                             <td>{{ $product->is_active }}</td>
                             <td>
