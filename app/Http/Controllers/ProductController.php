@@ -43,7 +43,6 @@ class ProductController extends Controller
 
    public function store(ProductRequest $request){
 
-    dd($request->all());
 
         $imageName = time().'.'.$request->image->extension();
         $request->image->storeAs('public/images', $imageName);         // Store in Storage Folder
@@ -51,7 +50,7 @@ class ProductController extends Controller
         // Public Folder
         // $request->image->move(public_path('images'), $imageName);
 
-        Product::create([
+       $products = Product::create([
             'category_id' => $request->category_id,
             'title' => $request->title,
             'slug' => Str::slug($request->title),
@@ -62,6 +61,8 @@ class ProductController extends Controller
 
         ]);
 
+        $products->colors()->attach($request->color_id);
+
         return redirect()->route('products.index')->withStatus('Data Insert Sucessfully');
     }
 
@@ -71,8 +72,11 @@ class ProductController extends Controller
     public function edit($id){
         $products = Product::findOrFail($id);
         $categories = Category::pluck('title','id')->toArray();
+        $colors = Color::pluck('name','id')->toArray();
+        $selectedColors = $products->colors()->pluck('id')->toArray();
+        $selectedCategory = $products->category_id;
 
-        return view('admin.pages.edit',compact('products','categories'));
+        return view('admin.pages.edit',compact('products','categories','colors','selectedColors','selectedCategory'));
 
     }
 
@@ -99,12 +103,16 @@ class ProductController extends Controller
 
         ]);
 
+        $products->colors()->sync($request->color_id);
+
+
         return redirect()->route('products.index')->withStatus('Data Update Sucessfully');
     }
 
     //Soft Delete
     public function destroy($id){
         Product::destroy($id);
+
 
         return redirect()->route('products.index')->withStatus('Data Deleted Sucessfully');
     }
@@ -129,6 +137,7 @@ class ProductController extends Controller
      // Final Delete
      public function delete($id){
         $product = Product::onlyTrashed()->find($id);
+        $product->colors()->detach();
         $product-> forceDelete();
 
         return redirect()->route('products.trash')->withStatus('Data Deleted Sucessfully');

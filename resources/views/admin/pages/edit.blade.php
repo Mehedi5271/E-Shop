@@ -44,7 +44,7 @@ Create
                     <option value="">Selete Category</option>
                     @foreach ($categories as $categoryId => $categorytitle)
 
-                    <option value="{{$categoryId}}">{{$categorytitle}} </option>
+                    <option value="{{ $categoryId }}" {{ old('category_id', $selectedCategory) == $categoryId ? 'selected' : '' }}>{{$categorytitle}} </option>
                     @endforeach
                 </select>
                 <label for="category_id"> Category</label>
@@ -91,6 +91,17 @@ Create
                     @error('image')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
+                    <label for="color">Color</label>
+                    @foreach ($colors as $colorId=>$colorName)
+
+                    <div class="form-check">
+                        <input class="form-check-input" name="color_id[]" value="{{$colorId}}" type="checkbox"  id="{{$colorId}}" @if (in_array($colorId,$selectedColors))
+                           checked
+                        @endif >
+                        <label class="form-check-label" for="{{$colorId}}"> {{$colorName}} </label>
+                    </div>
+                    @endforeach
+                    <br> <br>
 
             <div class="mt-4 mb-0">
                 <div class="d-grid"><button type="submit" class="btn btn-primary btn-block" >Submit</button></div>
