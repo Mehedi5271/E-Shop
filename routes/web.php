@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
@@ -24,6 +26,8 @@ Route::get('/', [HomeController::class,'welcome'])->name('welcome');
         Route::get('/products/downloadPdf',[ProductController::class,'downloadPdf'])->name('products.downloadPdf');
         Route::get('/products/downloadExcel',[ProductController::class,'downloadExcel'])->name('products.downloadExcel');
 
+        Route::post('/add-to-cart', [CartController::class,'store'])->name('cart.store');
+        Route::get('/cart-products', [CartController::class,'index'])->name('cart.products');
     });
 
 
@@ -58,5 +62,7 @@ Route::get('/', [HomeController::class,'welcome'])->name('welcome');
 
     Route::get('/{slug}',[HomeController::class,'CategoryWiseProducts'])->name('category.products');
     Route::get('/products/{slug}',[HomeController::class,'productDetails'])->name('product.details');
+
+
 
 

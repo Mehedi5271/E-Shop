@@ -60,4 +60,11 @@ class User extends Authenticatable
     public function isCustomer(){
         return $this->role_id==3;
     }
+
+    public function cartProducts(){
+        return $this->hasMany(CartProduct::class);
+    }
+
+
+
 }
