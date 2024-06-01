@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CartProduct;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -10,11 +11,10 @@ class CartController extends Controller
 
     public function index()
     {
-        // Fetch cart products for the authenticated user
-        $cartProducts = auth()->user()->cartProducts;
+        $categories = Category::pluck('title','slug')->toArray();
 
-        // For debugging
-        dd($cartProducts);
+        return view('cart-products',compact('categories'));
+
     }
     public function store(Request $request)
     {

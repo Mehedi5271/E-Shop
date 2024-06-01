@@ -25,7 +25,10 @@
             </ul>
           </li>
           <li class="nav-item">
+            @auth
+
             <a class="nav-link " href="{{route('cart.products')}}" tabindex="-1">Cart({{count(auth()->user()->cartProducts)}})</a>
+            @endauth
           </li>
         </ul>
         <form class="d-flex">
