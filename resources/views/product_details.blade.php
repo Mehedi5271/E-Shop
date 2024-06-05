@@ -15,12 +15,15 @@
                                 @csrf
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
                                 Quantity: <input type="number" name="quantity" placeholder="Quantity" required>
+                                @if (count($product->colors))
+
                                 Color:
                                 <select name="color_id" required>
                                     @foreach ($product->colors as $color)
-                                        <option value="{{ $color->id }}">{{ $color->name }}</option>
+                                    <option value="{{ $color->id }}">{{ $color->name }}</option>
                                     @endforeach
                                 </select>
+                                @endif
                                 <br><br>
                                 <button type="submit" class="btn btn-sm btn-outline-primary">Add To Cart</button>
                             </form>
