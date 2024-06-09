@@ -44,6 +44,8 @@ class CartController extends Controller
     public function deleteIteam($id){
        try{
         CartProduct::destroy($id);
+
+
         return response()->json([
             'success' => true,
             'message' => 'Iteam Remove from Cart'

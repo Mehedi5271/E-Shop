@@ -28,6 +28,7 @@ Route::get('/', [HomeController::class,'welcome'])->name('welcome');
 
         Route::post('/add-to-cart', [CartController::class,'store'])->name('cart.store');
         Route::get('/cart-products', [CartController::class,'index'])->name('cart.products');
+        Route::delete('cart-products/{id}',[CartController::class,'deleteIteam']);
     });
 
 
@@ -62,7 +63,6 @@ Route::get('/', [HomeController::class,'welcome'])->name('welcome');
 
     Route::get('/{slug}',[HomeController::class,'CategoryWiseProducts'])->name('category.products');
     Route::get('/products/{slug}',[HomeController::class,'productDetails'])->name('product.details');
-    Route::delete('cart-products/{id}',[CartController::class,'deleteIteam']);
 
 
 
