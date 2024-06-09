@@ -40,4 +40,20 @@ class CartController extends Controller
 
         return redirect()->back()->with('success', 'Product added to cart successfully!');
     }
+
+    public function deleteIteam($id){
+       try{
+        CartProduct::destroy($id);
+        return response()->json([
+            'success' => true,
+            'message' => 'Iteam Remove from Cart'
+        ]);
+       } catch(\Exception $e){
+        return response()->json([
+            'success' => false,
+            'message' =>$e->getMessage()
+        ]);
+
+       }
+    }
 }

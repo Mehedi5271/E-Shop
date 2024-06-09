@@ -62,6 +62,7 @@ Route::get('/', [HomeController::class,'welcome'])->name('welcome');
 
     Route::get('/{slug}',[HomeController::class,'CategoryWiseProducts'])->name('category.products');
     Route::get('/products/{slug}',[HomeController::class,'productDetails'])->name('product.details');
+    Route::delete('cart-products/{id}',[CartController::class,'deleteIteam']);
 
 
 
