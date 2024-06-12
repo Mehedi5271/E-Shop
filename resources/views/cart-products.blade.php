@@ -9,7 +9,7 @@
                 <th scope="col">Product ID</th>
                 <th scope="col">Unit Price</th>
                 <th scope="col">Quantity</th>
-                <th class="text-end" scope="col">Price</th>
+                <th class="text-end" scope="col"> Total Price</th>
             </tr>
         </thead>
         <tbody>
@@ -47,69 +47,86 @@
     @push('script')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+    const removeBtns = document.querySelectorAll('.remove-btn');
 
-            const removeBtns = document.querySelectorAll('.remove-btn');
+    removeBtns.forEach(function(btn) {
+        const id = btn.getAttribute('data-id');
 
-            removeBtns.forEach(function(btn) {
-                const id = btn.getAttribute('data-id');
+        btn.addEventListener('click', function() {
+            fetch(`/cart-products/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    btn.parentElement.parentElement.remove();
+                    updateTotalPrice();
+                    alert(data.message);
+                } else {
+                    alert('Something went wrong');
+                }
+            })
+            .catch(err => console.log(err));
+        });
+    });
 
-                btn.addEventListener('click', function() {
-                    fetch(`/cart-products/${id}`, {
-                        method: 'DELETE',
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        }
-                    })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.success) {
-                            btn.parentElement.parentElement.remove();
-                            updateTotalPrice();
-                            alert(data.message);
-                        } else {
-                            alert('Something went wrong');
-                        }
-                    })
-                    .catch(err => console.log(err));
-                });
-            });
+    function updateTotalPrice() {
+        const linePrices = document.querySelectorAll('.price');
+        let totalPrice = 0;
 
-            function updateTotalPrice() {
-                const linePrices = document.querySelectorAll('.price');
-                let totalPrice = 0;
+        linePrices.forEach(function(priceElement) {
+            totalPrice += parseFloat(priceElement.innerText);
+        });
 
-                linePrices.forEach(function(priceElement) {
-                    totalPrice += parseFloat(priceElement.innerText);
-                });
+        document.getElementById('totalPrice').innerText = totalPrice.toFixed(2);
+    }
 
-                document.getElementById('totalPrice').innerText = totalPrice.toFixed(2);
-            }
+    updateTotalPrice();
+
+    const plusBtns = document.querySelectorAll('.plus-btn');
+    plusBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            const qtyInput = this.previousElementSibling;
+            const updateQty = parseInt(qtyInput.value) + 1;
+            qtyInput.value = updateQty;
+
+            const unitPriceElement = this.parentElement.parentElement.previousElementSibling;
+            const priceElement = this.parentElement.parentElement.nextElementSibling;
+
+            const unitPrice = parseFloat(unitPriceElement.innerText);
+            const updatePrice = unitPrice * updateQty;
+            priceElement.innerText = updatePrice.toFixed(2);
 
             updateTotalPrice();
         });
-
-        const plusBtn = document.querySelectorAll('.plus-btn');
-          plusBtn.forEach(function(btn) {
-          btn.addEventListener('click', function() {
-            const qtyInput = this.previousElementSibling;
-            qtyInput.value = parseInt(qtyInput.value)+1;
-        });
     });
 
-    const minusBtn = document.querySelectorAll('.minus-btn');
-    minusBtn.forEach(function(btn) {
+    const minusBtns = document.querySelectorAll('.minus-btn');
+    minusBtns.forEach(function(btn) {
         btn.addEventListener('click', function() {
-
             const qtyInput = this.nextElementSibling;
-            if(qtyInput.value ==1 ){
-                alert('Minimun quantity 1')
+            if (qtyInput.value == 1) {
+                alert('Minimum quantity is 1');
                 return;
             }
-            qtyInput.value = parseInt(qtyInput.value)-1;
+            const updateQty = parseInt(qtyInput.value) - 1;
+            qtyInput.value = updateQty;
 
+            const unitPriceElement = this.parentElement.parentElement.previousElementSibling;
+            const priceElement = this.parentElement.parentElement.nextElementSibling;
 
+            const unitPrice = parseFloat(unitPriceElement.innerText);
+            const updatePrice = unitPrice * updateQty;
+            priceElement.innerText = updatePrice.toFixed(2);
+
+            updateTotalPrice();
         });
     });
+});
+
 
     </script>
     @endpush
