@@ -3,6 +3,7 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicController;
@@ -51,6 +52,7 @@ Route::get('/', [HomeController::class,'welcome'])->name('welcome');
         Route::get('/products/{id}/edit',[ProductController::class,'edit'])->name('products.edit');
         Route::patch('/products/{id}',[ProductController::class,'update'])->name('products.update');
         Route::delete('/products/{id}',[ProductController::class,'destroy'])->name('products.destroy');
+        Route::post('orders',[OrderController::class,'store'])->name('orders.store');
 
 
 

@@ -2,48 +2,65 @@
     <x-slot:title>
         E-Shop | Cart Products
     </x-slot:title>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Product ID</th>
-                <th scope="col">Unit Price</th>
-                <th scope="col">Quantity</th>
-                <th class="text-end" scope="col"> Total Price</th>
-            </tr>
+
+    <form action="{{route('orders.store')}}" method="POST">
+        @csrf
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Product ID</th>
+                    <th scope="col">Unit Price</th>
+                    <th scope="col">Quantity</th>
+                    <th class="text-end" scope="col"> Total Price</th>
+                </tr>
         </thead>
         <tbody>
             @foreach (auth()->user()->cartProducts as $cartProduct)
-                <tr>
-                    <th scope="row">
-                        <span class="btn btn-sm btn-danger me-2 remove-btn" data-id="{{ $cartProduct->id }}">X</span>
-                        {{ $loop->iteration }}
-                    </th>
-                    <td>{{ $cartProduct->product->title }} {{ $cartProduct->color ? ' - ' . $cartProduct->color->name : '' }}</td>
-                    <td class="unit-price">{{ $cartProduct->product->price }}</td>
-                    <td style="width: 180px">
-                        <div class="input-group">
-                            <div class="input-group-text minus-btn" >-</div>
-                            <input type="number"
-                            class="form-control qty"
-                            value="{{$cartProduct->quantity}}"
-                            placeholder="Quantity"
-                            aria-label="Input group example"
-                            aria-describedby="btnGroupAddon">
-                            <div class="input-group-text plus-btn" >+</div>
-                        </div>
-
-                    </div>
-                 </td>
-                    <td class="price text-end">{{ $cartProduct->quantity * $cartProduct->product->price }}</td>
-                </tr>
-            @endforeach
             <tr>
-                <td colspan="4"></td>
-                <td class="text-end">Total: <span id="totalPrice">0</span></td>
-            </tr>
-        </tbody>
-    </table>
+                <th scope="row">
+                    <input type="hidden" name="cart_product_id[]" value="{{$cartProduct->id}}">
+                    <span class="btn btn-sm btn-danger me-2 remove-btn" data-id="{{ $cartProduct->id }}">X</span>
+                    {{ $loop->iteration }}
+                </th>
+                <td>{{ $cartProduct->product->title }} {{ $cartProduct->color ? ' - ' . $cartProduct->color->name : '' }}</td>
+                <td class="unit-price">{{ $cartProduct->product->price }}</td>
+                <td style="width: 180px">
+                    <div class="input-group">
+                        <div class="input-group-text minus-btn" >-</div>
+                        <input type="number"
+                        class="form-control qty"
+                        value="{{$cartProduct->quantity}}"
+                        placeholder="Quantity"
+                        name="quantity[]">
+                        <div class="input-group-text plus-btn" >+</div>
+                    </div>
+
+                </div>
+            </td>
+            <td class="price text-end">{{ $cartProduct->quantity * $cartProduct->product->price }}</td>
+        </tr>
+        @endforeach
+        <tr>
+            <td colspan="4"></td>
+            <td class="text-end">Total: <span id="totalPrice">0</span></td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="row">
+    <div class="col-md-6">
+        <input type="text" class="form-control" name="contact_number" value="" placeholder="Enter your contact number">
+    </div>
+
+    <div class="col-md-6">
+        <input type="text" class="form-control" name="shipping_address" value="" placeholder="Enter your shipping address ">
+    </div>
+
+    <div class="mt-2">
+        <button type="submit" class="btn btn-primary">Place Order</button>
+    </div>
+</form>
     @push('script')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
