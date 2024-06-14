@@ -53,7 +53,7 @@ Route::get('/', [HomeController::class,'welcome'])->name('welcome');
         Route::patch('/products/{id}',[ProductController::class,'update'])->name('products.update');
         Route::delete('/products/{id}',[ProductController::class,'destroy'])->name('products.destroy');
         Route::post('orders',[OrderController::class,'store'])->name('orders.store');
-        Route::post('orders-success',[OrderController::class,'confirmed'])->name('orders.confirmed');
+        Route::get('orders-success',[OrderController::class,'confirmed'])->name('orders.confirmed');
 
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CartProduct;
+use App\Models\Category;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use Illuminate\Http\Request;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 class OrderController extends Controller
 {
     public function store(Request $request){
-        DB::beginTransaction();
+        DB::beginTransaction(); // multiple table a data pathanor kaj korar jonno use kora hoy
         // Create a new order for the authenticated user
         $order = auth()->user()->orders()->create([
             'contact_number' => $request->contact_number,
@@ -52,6 +53,8 @@ class OrderController extends Controller
     }
 
     public function confirmed(){
-        return view('order-confirmed');
+        $categories = Category::pluck('title','slug')->toArray();
+
+        return view('order-confirmed',compact('categories'));
     }
 }
