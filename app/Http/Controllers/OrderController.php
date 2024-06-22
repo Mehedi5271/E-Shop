@@ -6,6 +6,8 @@ use App\Models\CartProduct;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\OrderProduct;
+use App\Models\User;
+use App\Notifications\OrderConfirmed;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -48,6 +50,15 @@ class OrderController extends Controller
 
         // Delete all cart products for the authenticated user
         auth()->user()->cartProducts()->delete();
+
+       $notifiableUser = User::where('role_id',1)->get();
+       foreach($notifiableUser as $user){
+
+           $user->notify(new OrderConfirmed($order));
+       }
+
+
+
         DB::commit();
         return redirect()->route('orders.confirmed');
     }
