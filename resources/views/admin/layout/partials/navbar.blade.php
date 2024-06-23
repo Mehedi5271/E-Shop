@@ -10,11 +10,14 @@
     <!-- Navbar-->
     <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="navbarDropdownNotification" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-bell fa-fw"></i></a>
+            <a class="nav-link dropdown-toggle" id="navbarDropdownNotification" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-bell fa-fw"></i> ({{auth()->user()->unreadNotifications()->count()}}) </a>
 
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownNotification">
                 @foreach (auth()->user()->notifications as $notification)
-                <li><a class="dropdown-item" href="#!">{{ $notification->data['message'] }}</a></li>
+                <li><a class="dropdown-item" href="{{ $notification->data['url'] }}?notification_id={{$notification->id}}">{{ $notification->data['message'] }}  </a> <br>
+                    <mark> <small> {{$notification->created_at->diffForHumans()}} </small> </mark>
+
+                </li>
                 @endforeach
             </ul>
         </li>

@@ -63,6 +63,17 @@ class OrderController extends Controller
         return redirect()->route('orders.confirmed');
     }
 
+    public function show($id){
+        $order = Order::findOrFail($id);
+
+        $notificaton = auth()->user()->unreadNotifications()->where('id',request('notification_id'))->first();
+        if($notificaton){
+
+            $notificaton->markAsRead();
+        }
+        return view('admin.pages.orders.show',compact('order'));
+    }
+
     public function confirmed(){
         $categories = Category::pluck('title','slug')->toArray();
 
